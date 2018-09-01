@@ -25,6 +25,7 @@ while len(players[0].bids) > 0:
         print(msg)
 
         if len(tie_players) > 0:
+            assigned_factions = []
             for tie_group in tie_players:
                 winner_index, extra_bid, msg = rebid(tie_group, current_preference_level)
                 exported_report.append(winner_index)
@@ -40,6 +41,9 @@ while len(players[0].bids) > 0:
                 # assign player
                 assigned_faction = winner.bids[current_preference_level-1][0]
                 winner.assign_preference(current_preference_level)
+                assigned_factions.append(assigned_faction)
+
+            for assigned_faction in assigned_factions:
                 for player in players:
                     player.remove_faction(assigned_faction)
 
@@ -49,9 +53,13 @@ while len(players[0].bids) > 0:
 
     else:
         # assign faction to winners and remove assigned factions
+        assigned_factions = []
         for winner in assignable_players:
             assigned_faction = winner.bids[current_preference_level - 1][0]
             winner.assign_preference(current_preference_level)
+            assigned_factions.append(assigned_faction)
+
+        for assigned_faction in assigned_factions:
             for player in players:
                 player.remove_faction(assigned_faction)
 
