@@ -48,6 +48,16 @@ class Player:
                 return False
         return True
 
+    def win_or_tie_preference(self, preference, players):
+        if self.is_assigned():
+            return False
+        faction = self.bids[preference - 1][0]
+
+        for playerB in players:
+            if not self.win_or_tie_faction_against(playerB, faction):
+                return False
+        return True
+
     # return True if this player win the faction against playerB
     def win_faction_against(self, player_b, faction):
         if player_b.name == self.name:
@@ -62,8 +72,27 @@ class Player:
         # larger bid wins / or even bid and larger pref
         if (A_bid > B_bid) or (A_bid >= B_bid and A_pref < B_pref):
             return True
-        # print ("{} lost {} against {} {}-{} / {}-{}".format(self.name, faction, player_b.name, A_bid, A_pref, B_bid, B_pref))
+        # print ("{} lost {} against {} {}-{} / {}-{}"
+        # .format(self.name, faction, player_b.name, A_bid, A_pref, B_bid, B_pref))
         return False
+
+    def win_or_tie_faction_against(self, player_b, faction):
+        if player_b.name == self.name:
+            return True
+        if self.is_assigned():
+            return False
+        if player_b.is_assigned():
+            return True
+        A_bid, A_pref = self.get_bid_and_pref_by_faction(faction)
+        B_bid, B_pref = player_b.get_bid_and_pref_by_faction(faction)
+
+        # larger or even bid wins / or even bid and larger pref
+        if A_bid >= B_bid:
+            return True
+        # print ("{} lost {} against {} {}-{} / {}-{}"
+        # .format(self.name, faction, player_b.name, A_bid, A_pref, B_bid, B_pref))
+        return False
+
 
     def get_bid_and_pref_by_faction(self, faction):
         pref = 1
