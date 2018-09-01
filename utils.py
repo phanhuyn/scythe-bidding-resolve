@@ -29,20 +29,27 @@ def parse_one_player(row):
 
 
 def print_players(players):
-    toPrint = []
+    to_print = []
+
+    # print assigned player
+    for player in players:
+        if player.is_assigned():
+            to_print.append("{} is assigned with {}, bid {}, extra bid {}"
+                            .format(player.name, player.faction.upper(), player.bid_paid, player.extra_bid_paid))
+
     # print name
     names = "|{:^15}|".format("pref/name")
     for player in players:
-        names += "{:^15}|".format(player.name)
-    toPrint.append(names)
+        if not player.is_assigned():
+            names += "{:^15}|".format(player.name)
+    to_print.append(names)
 
+    # print bid
     for pref in range(0, len(players[0].bids)):
         bidOfPref = "|{:^15}|".format(pref+1)
         for player in players:
-            if player.is_assigned():
-                bidOfPref += "{:^15}|".format("X")
-            else:
+            if not player.is_assigned():
                 bidOfPref += "{:^10}-{:^4}|".format(player.bids[pref][0], player.bids[pref][1])
-        toPrint.append(bidOfPref)
+        to_print.append(bidOfPref)
 
-    return "\n".join(toPrint)
+    return "\n".join(to_print)
