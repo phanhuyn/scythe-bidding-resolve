@@ -52,6 +52,6 @@ def rebid(tie_group, current_preference_level):
     bid_msg = "Enter winner index, "
     for i in range(0, len(tie_group)):
         bid_msg += "{} ({}), ".format(tie_group[i].name, i)
-    winner_index = int(raw_input(bid_msg))
+    winner_index = int(input(bid_msg))
     winner_bid = input("Enter top-up bid ")
     return winner_index, winner_bid, msg

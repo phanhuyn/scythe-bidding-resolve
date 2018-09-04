@@ -8,11 +8,11 @@ def load_bid_data(bidFile):
     players = []
     with open(bidFile, 'rt') as csvFile:
         reader = csv.reader(csvFile, delimiter=',')
-        header = True
+        # header = True
         for row in reader:
-            if header:
-                header = False
-                continue
+            # if header:
+            #     header = False
+            #     continue
             players.append(parse_one_player(row))
     return players
 

@@ -12,7 +12,7 @@ print(cur_bids)
 
 
 current_preference_level = 1
-while len(players[0].bids) > 0:
+while len(players[0].bids) > 7 - len(players):
     # 1.1. assignable players (no showdown)
     assignable_players, msg = find_assignable_players(players, current_preference_level)
     exported_report.append(msg)
